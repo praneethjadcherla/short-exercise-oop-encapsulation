@@ -18,26 +18,21 @@ public class WeatherReporter {
     }
 
     public String displayWeather() {
-        double covertToFahrenheit = TEMP_CONVERSION_CONST * temperature + MIN_FAHRENHEIT_TEMP;
         return MessageFormat.format("I am in {0} and it is {1}. {2}. The temperature in Fahrenheit is {3}.",
-                location, weatherSymbolBasedOnLocation(), weatherBasedOnTemperature(), covertToFahrenheit);
+                location, weatherSymbolBasedOnLocation(), weatherBasedOnTemperature(), convertCelsiusToFahrenheit());
+    }
+
+    private double convertCelsiusToFahrenheit(){
+        return (TEMP_CONVERSION_CONST * temperature + MIN_FAHRENHEIT_TEMP);
     }
 
     private String weatherSymbolBasedOnLocation() {
-        if (location.equals("London")) {
-
-            return "🌦";
-
-        } else if (location.equals("California")) {
-
-            return "🌅";
-
-        } else if (location.equals("Cape Town")) {
-
-            return "🌤";
-
-        }
-        return "🔆";
+        return switch (location) {
+            case "London" -> "🌦";
+            case "California" -> "🌅";
+            case "Cape Town" -> "🌤";
+            default -> "🔆";
+        };
     }
 
     private String weatherBasedOnTemperature() {
